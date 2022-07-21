@@ -1,0 +1,38 @@
+{
+	"name": "@nano-utils/web-socket",
+	"version": "1.1.3",
+	"description": "A lightweight wrapper library around the web WebSocket API",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"author": "Jason Xu",
+	"license": "MIT",
+	"keywords": [
+		"WebSocket",
+		"Client"
+	],
+	"scripts": {
+		"test": "jest --coverage",
+		"build": "tsc -b ./tsconfig.json"
+	},
+	"devDependencies": {
+		"@types/jest": "^28.1.6",
+		"@types/ws": "^8.2.0",
+		"@typescript-eslint/eslint-plugin": "^5.0.0",
+		"@typescript-eslint/parser": "^5.0.0",
+		"eslint": "^8.0.0",
+		"jest": "^28.1.3",
+		"ts-jest": "^28.0.7",
+		"typescript": "^4.4.3",
+		"websocket-polyfill": "^0.0.3",
+		"ws": "^8.2.3"
+	},
+	"dependencies": {
+		"@nano-utils/evt-src": "^1.3.0",
+		"@nano-utils/logger": "^1.0.0"
+	},
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JasonXu314/web-socket.git"
+	}
+}

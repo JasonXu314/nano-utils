@@ -1,0 +1,18 @@
+{
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev --parallel",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"test": "turbo run test"
+	},
+	"devDependencies": {
+		"turbo": "latest"
+	}
+}
+
