@@ -1,0 +1,30 @@
+{
+	"name": "@nano-utils/object-proxy",
+	"version": "1.0.1",
+	"description": "A small library to make object proxying easier",
+	"main": "dist",
+	"scripts": {
+		"test": "jest --coverage",
+		"build": "tsc -b ./tsconfig.json"
+	},
+	"keywords": [
+		"proxy"
+	],
+	"author": "Jason Xu",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/jest": "^28.1.6",
+		"@typescript-eslint/eslint-plugin": "^5.30.7",
+		"@typescript-eslint/parser": "^5.30.7",
+		"eslint": "^8.20.0",
+		"jest": "^28.1.3",
+		"ts-jest": "^28.0.7",
+		"typescript": "^4.3.5"
+	},
+	"private": false,
+	"dependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JasonXu314/object-proxy"
+	}
+}
