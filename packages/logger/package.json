@@ -1,0 +1,27 @@
+{
+	"name": "@nano-utils/logger",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"author": "Jason Xu",
+	"license": "MIT",
+	"description": "A simple logger for fancier and modularized log messages",
+	"keywords": [
+		"Logger"
+	],
+	"scripts": {
+		"test": "jest --coverage",
+		"build": "tsc -b ./tsconfig.json"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.0.0",
+		"@typescript-eslint/parser": "^5.0.0",
+		"eslint": "^8.0.0",
+		"typescript": "^4.4.3"
+	},
+	"private": false,
+	"dependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JasonXu314/logger.git"
+	}
+}
