@@ -9,7 +9,6 @@
 		"Logger"
 	],
 	"scripts": {
-		"test": "jest --coverage",
 		"build": "tsc -b ./tsconfig.json"
 	},
 	"devDependencies": {
