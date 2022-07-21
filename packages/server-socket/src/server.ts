@@ -14,11 +14,14 @@ export class WSServer<
 	private _wss: WebSocket.WebSocketServer;
 	private _clients: Socket<IM, OM, IT, OT>[];
 	private _events: EventSrc<{ connection: Socket<IM, OM, IT, OT>; disconnect: Socket<IM, OM, IT, OT> }>;
+	private _server: http.Server | https.Server | null = null;
 
-	constructor(server?: WebSocket.WebSocketServer | http.Server | https.Server) {
-		if (!server) {
+	constructor(server: WebSocket.WebSocketServer | http.Server | https.Server | number) {
+		if (typeof server === 'number') {
+			const port = server;
 			server = http.createServer();
-			server.listen(3000);
+			server.listen(port);
+			this._server = server;
 		}
 
 		if (server instanceof WebSocket.WebSocketServer) {
@@ -33,8 +36,8 @@ export class WSServer<
 				this._events.dispatch('connection', client);
 
 				socket.on('close', () => {
-					this._events.dispatch('disconnect', client);
 					this._clients = this._clients.filter((c) => c !== client);
+					this._events.dispatch('disconnect', client);
 				});
 			});
 		} else {
@@ -49,8 +52,8 @@ export class WSServer<
 				this._events.dispatch('connection', client);
 
 				socket.on('close', () => {
-					this._events.dispatch('disconnect', client);
 					this._clients = this._clients.filter((c) => c !== client);
+					this._events.dispatch('disconnect', client);
 				});
 			});
 		}
@@ -65,7 +68,7 @@ export class WSServer<
 			case 'disconnect':
 				return this._events.on('disconnect', cb);
 			default:
-				throw new Error('Invalid event type');
+				throw new Error(`WSServer#on(): Invalid event type: ${evt}`);
 		}
 	}
 
@@ -81,7 +84,11 @@ export class WSServer<
 		return new Promise<void>((resolve) => {
 			this._clients = [];
 			this._wss.close();
-			this._wss.on('close', () => resolve());
+			if (this._server) {
+				this._server.close(() => resolve());
+			} else {
+				this._wss.on('close', () => resolve());
+			}
 		});
 	}
 }

@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
-import { importJSON, requireJSON, Types } from '../src/index';
+import { array, boolean, number, object, string } from 'yup';
+import { importJSON, requireJSON } from '../src/index';
 
 type Test1Obj = {
 	key: string;
@@ -21,16 +22,22 @@ type Test4Obj = {
 	other: string;
 };
 
+type Test5Obj = {
+	arr: number[];
+};
+
 const test1Obj = { key: 'value' };
 const test2Obj = { number: 1, string: 'value', boolean: true };
 const test3Obj = { key: 'value', other: 'value' };
 const test4Obj = { deeply: { nested: 'property' }, other: 'value' };
+const test5Obj = { arr: [1, 2, 3] };
 
 beforeAll(() => {
 	writeFileSync('1.json', JSON.stringify(test1Obj, null, 4));
 	writeFileSync('2.json', JSON.stringify(test2Obj, null, 4));
 	writeFileSync('3.json', JSON.stringify(test3Obj, null, 4));
 	writeFileSync('4.json', JSON.stringify(test4Obj, null, 4));
+	writeFileSync('5.json', JSON.stringify(test5Obj, null, 4));
 });
 
 const fileSystem = new Map<string, string>();
@@ -56,20 +63,40 @@ describe('Main Test Suite', () => {
 
 	it('Checks types correctly', () => {
 		expect(() => {
-			const jsonObj = importJSON<Test2Obj>('2.json', Types.OBJECT<Test2Obj>({ number: Types.NUMBER, string: Types.STRING, boolean: Types.BOOLEAN }));
+			const jsonObj = importJSON<Test2Obj>(
+				'2.json',
+				object({
+					number: number().required(),
+					string: string().required(),
+					boolean: boolean().strict().required()
+				})
+			);
 
 			expect(jsonObj).toMatchObject(test2Obj);
 		}).not.toThrow();
 		expect(() => {
-			// @ts-expect-error
-			const jsonObj = importJSON<Test2Obj>('2.json', Types.OBJECT<Test2Obj>({ number: Types.NUMBER, string: Types.STRING, boolean: Types.STRING }));
+			const jsonObj = importJSON<Test2Obj>(
+				'2.json',
+				// @ts-expect-error
+				object({
+					number: number().required(),
+					string: string().required(),
+					boolean: string().strict().required()
+				})
+			);
 
 			expect(jsonObj).toMatchObject(test2Obj);
 		}).toThrow();
 	});
 
 	it('Modifies file correctly', () => {
-		const jsonObj = importJSON<Test3Obj>('3.json', Types.OBJECT<Test3Obj>({ key: Types.STRING, other: Types.STRING }));
+		const jsonObj = importJSON<Test3Obj>(
+			'3.json',
+			object({
+				key: string().required(),
+				other: string().required()
+			})
+		);
 
 		expect(jsonObj).toMatchObject(test3Obj);
 
@@ -84,7 +111,12 @@ describe('Main Test Suite', () => {
 	it('Modifies nested properties correctly', () => {
 		const jsonObj = importJSON<Test4Obj>(
 			'4.json',
-			Types.OBJECT<Test4Obj>({ deeply: Types.OBJECT<{ nested: string }>({ nested: Types.STRING }), other: Types.STRING })
+			object({
+				deeply: object({
+					nested: string().required()
+				}).required(),
+				other: string().required()
+			})
 		);
 
 		expect(jsonObj).toMatchObject(test4Obj);
@@ -95,5 +127,18 @@ describe('Main Test Suite', () => {
 		const newJSON = JSON.parse(readFileSync('4.json').toString()) as Test4Obj;
 
 		expect(newJSON).toMatchObject(test4Obj);
+	});
+
+	it('Modifies arrays', () => {
+		const jsonObj = importJSON<Test5Obj>('5.json', object({ arr: array(number().required()).required() }));
+
+		expect(jsonObj).toMatchObject(test5Obj);
+
+		jsonObj.arr[0] = 2;
+		test5Obj.arr[0] = 2;
+
+		const newJSON = JSON.parse(readFileSync('5.json').toString()) as Test5Obj;
+
+		expect(newJSON).toMatchObject(test5Obj);
 	});
 });

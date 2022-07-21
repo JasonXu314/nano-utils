@@ -48,17 +48,18 @@ const obj: MyObject = importJSON<MyObject>('./data.json');
 console.log(obj); // { foo: 'bar' }
 ```
 
-Pass in a template object to enable type validation:
+We support using the [`yup`](https://www.npmjs.com/package/yup) library to perform validation:
 
 ```ts
-import { importJSON, Types, Obj, ObjectModel } from '@nano-utils/json-import';
+import { importJSON } from '@nano-utils/json-import';
+import { object, string } from 'yup';
 
 type MyObject = {
 	foo: string;
 };
 
-const template: Obj<ObjectModel<MyObject>> = Types.OBJECT({
-	foo: Types.STRING;
+const schema = object({
+	foo: string()
 });
 
 /** data.json
@@ -66,30 +67,13 @@ const template: Obj<ObjectModel<MyObject>> = Types.OBJECT({
  * 		"foo": "bar"
  * 	}
  */
-const obj: MyObject = importJSON<MyObject>('./data.json', template);
-
-console.log(obj); // { foo: 'bar' }
-```
-
-JS:
-
-```js
-import { importJSON, Types } from '@nano-utils/json-import';
-
-const template = Types.OBJECT({
-	foo: Types.STRING;
-});
-
-/** data.json
- * 	{
- * 		"foo": "bar"
- * 	}
- */
-const obj = importJSON('./data.json', template);
+const obj: MyObject = importJSON<MyObject>('./data.json', schema);
 
 console.log(obj); // { foo: 'bar' }
 ```
 
 ## Usage Notes:
 
+-   When working with arrays, make sure to always assign values, do not use methods such as `push` or `splice`. Otherwise, the underlying proxy will not detect your changes.
+-   When validating with `yup`, it is recommended to use strict mode for your types, otherwise you may run into type coercion issues (see [here](https://github.com/jquense/yup/issues/54) for more information.)
 -   `requireJSON` is equivalent to `importJSON`

@@ -1,11 +1,16 @@
-import { JSONError } from '../dist/JSONError';
+import { JSONError } from '../src/JSONError';
 
 describe('JSON Error test suite', () => {
 	it('Constructs properly', () => {
-		const error = new JSONError('test');
+		let error = new JSONError('test');
 
 		expect(error).toBeTruthy();
 		expect(error.message).toBe('test');
+
+		error = new JSONError();
+
+		expect(error).toBeTruthy();
+		expect(error.message).toBe('');
 	});
 
 	it('Can find its own instances', () => {

@@ -29,5 +29,8 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/JasonXu314/json-import"
+	},
+	"peerDependencies": {
+		"yup": "^0.32.11"
 	}
 }
