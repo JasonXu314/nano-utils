@@ -18,8 +18,8 @@ describe('Server test suite', () => {
 	describe('Self-constructing server & attaching to node http/s server objects', () => {
 		it('Should construct & receive properly', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5000);
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5001);
+				socket = new WebSocket('ws://localhost:5001');
 
 				socket.onopen = () => {
 					socket.send(JSON.stringify({ type: 'TEST', test: 'test' }));
@@ -36,8 +36,8 @@ describe('Server test suite', () => {
 
 		it('Should get clients', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5000);
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5001);
+				socket = new WebSocket('ws://localhost:5001');
 
 				wss.on('connection', (client) => {
 					expect(wss.clients.length).toBe(1);
@@ -49,8 +49,8 @@ describe('Server test suite', () => {
 
 		it('Should remove client on disconnect', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5000);
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5001);
+				socket = new WebSocket('ws://localhost:5001');
 
 				socket.onopen = () => {
 					socket.close();
@@ -70,9 +70,9 @@ describe('Server test suite', () => {
 
 		it('Should broadcast properly', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5000);
-				socket = new WebSocket('ws://localhost:5000');
-				const sock2 = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5001);
+				socket = new WebSocket('ws://localhost:5001');
+				const sock2 = new WebSocket('ws://localhost:5001');
 
 				wss.on('connection', () => {
 					if (wss.clients.length === 2) {
@@ -93,8 +93,8 @@ describe('Server test suite', () => {
 
 		it('Should throw when trying to bind to an invalid event', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5000);
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(5001);
+				socket = new WebSocket('ws://localhost:5001');
 
 				expect(() => {
 					// @ts-expect-error
@@ -109,8 +109,8 @@ describe('Server test suite', () => {
 	describe('Attaching to an existing ws WebSocketServer', () => {
 		it('Should construct & receive properly', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5000 }));
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5001 }));
+				socket = new WebSocket('ws://localhost:5001');
 
 				socket.onopen = () => {
 					socket.send(JSON.stringify({ type: 'TEST', test: 'test' }));
@@ -127,8 +127,8 @@ describe('Server test suite', () => {
 
 		it('Should get clients', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5000 }));
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5001 }));
+				socket = new WebSocket('ws://localhost:5001');
 
 				wss.on('connection', (client) => {
 					expect(wss.clients.length).toBe(1);
@@ -140,8 +140,8 @@ describe('Server test suite', () => {
 
 		it('Should remove client on disconnect', async () => {
 			return new Promise<void>((resolve) => {
-				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5000 }));
-				socket = new WebSocket('ws://localhost:5000');
+				wss = new WSServer<ISocketMsgs, OSocketMsgs>(new WebSocket.Server({ port: 5001 }));
+				socket = new WebSocket('ws://localhost:5001');
 
 				socket.onopen = () => {
 					socket.close();

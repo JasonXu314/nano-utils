@@ -1,6 +1,6 @@
 {
 	"name": "@nano-utils/json-import",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "A library to make changes to objects imported from JSON files reflected in the file",
 	"main": "dist",
 	"scripts": {
@@ -28,7 +28,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/JasonXu314/json-import"
+		"url": "git+https://github.com/JasonXu314/nano-utils/tree/master/packages/json-import"
 	},
 	"peerDependencies": {
 		"yup": "^0.32.11"

@@ -1,6 +1,6 @@
 {
 	"name": "@nano-utils/object-proxy",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "A small library to make object proxying easier",
 	"main": "dist",
 	"scripts": {
@@ -25,6 +25,6 @@
 	"dependencies": {},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/JasonXu314/object-proxy"
+		"url": "git+https://github.com/JasonXu314/nano-utils/tree/master/packages/object-proxy"
 	}
 }

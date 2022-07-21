@@ -1,6 +1,6 @@
 {
 	"name": "@nano-utils/logger",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/index.js",
 	"author": "Jason Xu",
 	"license": "MIT",
@@ -21,6 +21,6 @@
 	"dependencies": {},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/JasonXu314/logger.git"
+		"url": "git+https://github.com/JasonXu314/nano-utils/tree/master/packages/logger"
 	}
 }
